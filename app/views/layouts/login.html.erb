@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>出口质量感知评测系统-登录</title>
+  <%= stylesheet_link_tag 'application', :media => "all" %>
+  <%= stylesheet_link_tag '/css/font-awesome.min', :media => "all" %>
+  <%= stylesheet_link_tag '/css/ace.min', :media => "all" %>
+  <%= stylesheet_link_tag '/css/ace-responsive.min', :media => "all" %>
+  <%= javascript_include_tag 'login/login' %>
+  <%= csrf_meta_tags %>
+
+</head>
+<body class="login-layout">
+
+<div class="container" style="width: 1200px">
+  <div class="container-fluid main-container">
+    <div class="row span12 offset1">
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+
+        <%= yield %>
+        <div class="row-fluid">
+          <div class="span12">&nbsp;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render 'layouts/login_footer' %>
+</body>
+</html>

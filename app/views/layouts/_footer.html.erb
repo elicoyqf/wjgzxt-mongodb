@@ -1,0 +1,93 @@
+<footer class="black-gradient">
+  <a class="brand pull-right" href="index.html">
+    <span class="rad">Power by</span> Ruby on Rails
+  </a>
+
+  <div class="square-turtle pull-left">
+    <p>
+      2013 &copy; All rights reserved
+    </p>
+  </div>
+</footer>
+
+
+<script type="text/javascript">
+  jQuery(function ($) {
+// format date inputs
+    $("a[rel=popover]").popover();
+    $('#user-popover').popover();
+    /**
+     * Sets active and expands menu items based on id of body tag of current page
+     * e.g. <body id="body-index-page"> will result in the menu item with the id="navigation-index-page" having the
+     * class 'active' added, subsequently it will look for a child div with a class of collapse and add the class 'in'
+     * and set the height to auto
+     */
+    var body_id = $('body').attr('id');
+    if (body_id != null) {
+      var nav_element = $('#navigation-' + body_id.replace('body-', ''));
+      nav_element.addClass('active');
+      if (nav_element.has('div.collapse')) {
+        var child_nav = nav_element.find('div.collapse');
+        child_nav.addClass('in');
+        child_nav.css('height: auto;');
+      }
+    }
+//hide the top-stats when the arrow is clicked
+    var item = $('.top-stats');
+    var target = $('#hide-top-stats');
+    if (item.length > 0 && target.length > 0) {
+      target.on('click', function () {
+        item.css('position', 'relative');
+        item.animate({
+          left: '-=1200'
+        }, 1000, function () {
+// Animation complete.
+          item.hide('slow');
+        });
+      });
+    }
+
+    var pscitems = $(':button[id^="psc"]').each(function () {
+//      worse = $('#worse-1').val();
+      $(this).click(function () {
+        var vv = $(this).attr('id');
+
+        var psc_id = vv.replace('psc-', '');
+
+        var worse = vv.replace('psc', 'worse');
+        var worse_val = $('#' + worse).val();
+
+        var bad = vv.replace('psc', 'bad');
+        var bad_val = $('#' + bad).val();
+
+        var good = vv.replace('psc', 'good');
+        var good_val = $('#' + good).val();
+
+        var better = vv.replace('psc', 'better');
+        var better_val = $('#' + better).val();
+
+        var normal = vv.replace('psc', 'normal');
+        var normal_val = $('#' + normal).val();
+
+        alert(worse_val);
+        alert(bad_val);
+        alert(normal_val);
+        alert(good_val);
+        alert(better_val);
+
+        $.post(
+                'mod_http_sc',
+                {id: psc_id, worse: worse_val, bad: bad_val, good: good_val, better: better_val, normal: normal_val},
+                function (result) {
+                  if (data.length == 2) {
+//说明失败了
+                  } else {
+//说明成功了
+                  }
+                }
+        );
+      });
+    });
+
+  });
+</script>
