@@ -162,6 +162,18 @@ module CsvDb
           if es.total_scores < 0
             nega_val += es.total_scores
             nega_num += 1
+
+            #将负分网站url增加到HttpTestStatisURL表里面去以便于将来统计,type为0表示负分网站
+            htsu_tmp = HttpTestStatisUrl.where(export_name: e_name, day: time_begin.at_beginning_of_day, type: 0)
+            if htsu_tmp.blank?
+              HttpTestStatisUrl.create(export_name: e_name, day: time_begin.at_beginning_of_day, type: 0, dest_url: es.dest_url)
+            end
+          else
+            #将网站url增加到HttpTestStatisURL表里面去以便于将来统计,type为1表示非负分网站
+            htsu_tmp = HttpTestStatisUrl.where(export_name: e_name, day: time_begin.at_beginning_of_day, type: 1)
+            if htsu_tmp.blank?
+              HttpTestStatisUrl.create(export_name: e_name, day: time_begin.at_beginning_of_day, type: 1, dest_url: es.dest_url)
+            end
           end
           match << es.dest_url
         end
@@ -176,16 +188,15 @@ module CsvDb
           up_tmp = HttpTestStatisBtd.where(export_name: e_name, day: time_begin.at_beginning_of_day)
           if up_tmp.blank?
             HttpTestStatisBtd.create(export_name:  e_name, day: time_begin.at_beginning_of_day, negative_statis: negative_statis,
-                                     total_statis: total_statis, negative_num: nega_num, all_match_num: match.size)
+                                     total_statis: total_statis)
           else
             ns = up_tmp.first.negative_statis + negative_statis
             ts = up_tmp.first.total_statis + total_statis
-            nn = up_tmp.first.negative_num + nega_num
-            am = up_tmp.first.all_match_num + match.size
-
-            up_tmp.update(negative_statis: ns, total_statis: ts, negative_num: nn, all_match_num: am)
-
+            up_tmp.update(negative_statis: ns, total_statis: ts)
           end
+
+          #更新当天的负分网站及总匹配网站数据
+
 
           #如果其得负分的浏览网站数量/总测试浏览网站数量*100%≥60%（相同归属运营商的比较）；则发送邮件
           nega_r = nega_num.to_f / match.size.to_f

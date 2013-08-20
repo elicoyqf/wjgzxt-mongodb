@@ -274,8 +274,9 @@ negative_items_scores equal_items_scores total_scores)
     etn.delete(BACKBONE)
     hts = HttpTestStatis.where(:start_time.gte => time_begin, :start_time.lt => time_end)
 
+    #todo:等数据更新后将可以启用新的算法
+    #hts = HttpTestStatisBtd.where(:start_time.gte => time_begin.at_beginning_of_day, :start_time.lt => time_end)
     #等数据更新后将可以启用新的算法
-    #hts = HttpTestStatisBtd.where(:start_time.gte => time_begin, :start_time.lt => time_end)
 
     dx  = 0
     lt  = 0
@@ -316,10 +317,13 @@ negative_items_scores equal_items_scores total_scores)
             negat_web << t.dest_url
           end
         end
-        puts '*'*100
-        puts ename
-        puts en_tmp
-        puts '*'*100
+
+        #todo:等数据更新后将可以启用新的算法
+        #negative_web = HttpTestStatisUrl.where(:test_time.gte => time_begin.at_beginning_of_day, :test_time.lt => time_end, :source_node_name => ename, :type => 0).count
+        #match_web    = HttpTestStatisUrl.where(:test_time.gte => time_begin.at_beginning_of_day, :test_time.lt => time_end, :source_node_name => ename).count
+        #等数据更新后将可以启用新的算法
+
+
         negative_total = hts.where(:export_name => ename).sum(:negative_statis)
         all_total      = hts.where(:export_name => ename).sum(:total_statis)
         negative_web   = negat_web.size
