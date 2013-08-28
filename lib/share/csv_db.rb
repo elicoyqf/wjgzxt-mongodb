@@ -25,7 +25,7 @@ module CsvDb
                                     time_to_index:   row[10], page_download_time: row[11], page_loading_time: row[12], total_time: row[13], throughput_time: row[14],
                                     overall_quality: row[15], resolution_sr: row[16], connection_sr: row[17], index_page_loading_sr: row[18],
                                     page_loading_r:  row[19], loading_sr: row[20], dest_ip_address: row[21], dest_nationality: row[22], dest_province: row[23],
-                                    dest_locale:     row[24], download_size: row[25], contents_size: row[26], return_code: row[27], add_ons: row[28],
+                                    dest_locale:     row[24].to_s.strip, download_size: row[25], contents_size: row[26], return_code: row[27], add_ons: row[28],
                                     element_number:  row[29])
 
                 #更新归属地数据和测试网站相关信息

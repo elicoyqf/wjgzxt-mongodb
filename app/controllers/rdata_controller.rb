@@ -61,7 +61,7 @@ class RdataController < ApplicationController
     oth_arr.each do |line|
       tmp_arr = []
       tmp_arr << line
-      bbdata = HttpTestData.where(:test_time.gte => time_begin, :test_time.lt => time_end,:source_node_name => BACKBONE, :dest_url =>line[2])
+      bbdata = HttpTestData.where(:test_time.gte => time_begin, :test_time.lt => time_end,:source_node_name => BACKBONE, :dest_url =>line[2], :dest_locale.in => %w(电信 联通))
       unless bbdata.blank?
         if bbdata.size == 1
           tmp_arr << [bbdata.first.test_time, BACKBONE, bbdata.first.dest_url, bbdata.first.time_to_index, bbdata.first.total_time, bbdata.first.throughput_time, bbdata.first.connection_sr, bbdata.first.index_page_loading_sr]
