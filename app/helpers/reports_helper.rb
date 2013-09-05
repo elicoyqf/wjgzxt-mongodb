@@ -12,7 +12,7 @@ module ReportsHelper
   #骨干出口有效数据
   def blackbone_data_valid
     #backbone_data     = HttpTestData.where('source_node_name = ? and test_time >= ? and test_time < ?', BACKBONE, Time.parse('2013-03-1 21:00:00'),Time.parse('2013-03-1 22:00:00'))
-    backbone_data     = HttpTestData.where(:source_node_name => BACKBONE, :test_time.gte => Time.parse('2013-03-1 21:00:00'), :test_time.lt => Time.parse('2013-03-1 22:00:00'))
+    backbone_data     = HttpTestData.where(:test_time.gte => Time.parse('2013-03-1 21:00:00'), :test_time.lt => Time.parse('2013-03-1 22:00:00'), :source_node_name => BACKBONE)
     new_backbone_data = []
     backbone_data.each do |bline|
       host_locale =''
@@ -33,7 +33,7 @@ module ReportsHelper
   #对自租出口提取有效数据
   def other_data_valid
     #other_data = HttpTestData.where('source_node_name != ? and test_time >= ? and test_time < ?', BACKBONE, Time.parse('2013-03-1 21:00:00'),Time.parse('2013-03-1 22:00:00'))
-    other_data = HttpTestData.where(:source_node_name.ne => BACKBONE, :test_time.gte => Time.parse('2013-03-1 21:00:00'), :test_time.lt => Time.parse('2013-03-1 22:00:00'))
+    other_data = HttpTestData.where(:test_time.gte => Time.parse('2013-03-1 21:00:00'), :test_time.lt => Time.parse('2013-03-1 22:00:00'), :source_node_name.ne => BACKBONE)
     new_data   =[]
     other_data.each do |line|
       source_node_arr = line.source_node_name.to_s.strip[-4..-3]

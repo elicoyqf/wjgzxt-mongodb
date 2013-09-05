@@ -41,4 +41,12 @@ class HttpTestScore
 
   index({ test_time: 1, dest_url: 1, source_node_name: 1, total_scores: 1 }, { name: 'hts_ix' })
 
+=begin
+  add_index "http_test_scores", ["dest_url"], :name => "index_http_test_scores_on_dest_url"
+  add_index "http_test_scores", ["test_time", "source_node_name", "dest_url", "equal_items_scores", "total_scores"], :name => "hts_tsdet"
+  add_index "http_test_scores", ["test_time", "source_node_name", "total_scores", "dest_url"], :name => "hts_tstd"
+  add_index "http_test_scores", ["test_time", "source_node_name", "total_scores"], :name => "hts_tst"
+  add_index "http_test_scores", ["test_time", "source_node_name"], :name => "index_http_test_scores_on_test_time_and_source_node_name"
+=end
+
 end

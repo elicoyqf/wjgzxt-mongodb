@@ -34,4 +34,11 @@ class HttpTestData
 
   index({test_time: 1,dest_node_name: 1, dest_url: 1,source_node_name: 1 },{name: 'htd_ix'})
 
+=begin
+  ActiveRecord::Migration.add_index :http_test_data, [:test_time, :dest_url]
+  ActiveRecord::Migration.add_index :http_test_data, [:test_time, :source_node_name]
+  ActiveRecord::Migration.add_index :http_test_data, [:test_time, :dest_node_name, :dest_url], name: 'htd_tdd'
+  ActiveRecord::Migration.add_index :http_test_data, [:test_time, :source_node_name, :dest_url], name: 'htd_tsd'
+=end
+
 end

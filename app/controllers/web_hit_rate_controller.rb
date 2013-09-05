@@ -15,7 +15,7 @@ class WebHitRateController < ApplicationController
     day         = params[:day]
     date_begin  = Time.parse(day).at_beginning_of_hour
     #url_data   = HttpTestData.where('dest_url = ? and test_time >= ? and test_time < ?', @url, date_begin, date_begin+1.hour)
-    url_data    = HttpTestData.where(:dest_url => @url, :test_time.gte => date_begin, :test_time.lt => date_begin+1.hour)
+    url_data    = HttpTestData.where(:test_time.gte => date_begin, :test_time.lt => date_begin+1.hour, :dest_url => @url)
     @all_in_one = []
     url_data.each do |record|
       tmp = []
@@ -33,7 +33,7 @@ class WebHitRateController < ApplicationController
     date_begin  = Time.parse(d_str)
     f_day       = date_begin.at_beginning_of_month.day
     l_day       = date_begin.at_end_of_month.day
-    url_data    = WebHitRateStatis.where(:url => @url, :time_begin.gte => date_begin, :time_begin.lt => date_begin+1.month)
+    url_data    = WebHitRateStatis.where(:time_begin.gte => date_begin, :time_begin.lt => date_begin+1.month, :url => @url)
     #url_data    = WebHitRateStatis.where('url = ?  and time_begin >= ? and time_begin < ?', @url, date_begin, date_begin+1.month)
     @all_in_one = []
     (f_day..l_day).each do |d|
@@ -53,16 +53,16 @@ class WebHitRateController < ApplicationController
     day         = params[:day]
     date_begin  = Time.parse(day).at_beginning_of_day
     #url_data    = WebHitRateStatis.where('url = ?  and time_begin >= ? and time_begin < ?', @url, date_begin, date_begin+1.day)
-    url_data    = WebHitRateStatis.where(:url => @url, :time_begin.gte => date_begin, :time_begin.lt => date_begin+1.day)
+    url_data    = WebHitRateStatis.where(:time_begin.gte => date_begin, :time_begin.lt => date_begin+1.day, :url => @url)
     @all_in_one = []
     (0..23).each do |time|
-      tmp     = []
-      dx      = 0
-      lt      = 0
-      dx_data = url_data.where(:time_begin =>date_begin)
-      lt_data = url_data.where(:time_begin => date_begin)
-      dx = dx_data.avg('dx_hit_rate') unless dx_data.blank?
-      lt = lt_data.avg('dx_hit_rate') unless lt_data.blank?
+      tmp        = []
+      dx         = 0
+      lt         = 0
+      dx_data    = url_data.where(:time_begin => date_begin)
+      lt_data    = url_data.where(:time_begin => date_begin)
+      dx         = dx_data.avg('dx_hit_rate') unless dx_data.blank?
+      lt         = lt_data.avg('dx_hit_rate') unless lt_data.blank?
       date_point = Time.parse(day.to_s+' '+ time.to_s + ':00')
       tmp << date_point << dx << lt
       date_begin += 1.hour
