@@ -78,7 +78,7 @@ module UtiltilyTools
     else
       ll = '其它'
     end
-    
+
     if ename =~ /#{ll}/
       true
     else
