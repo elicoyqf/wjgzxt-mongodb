@@ -61,20 +61,24 @@ class RdataController < ApplicationController
     oth_arr.each do |line|
       tmp_arr = []
       tmp_arr << line
-      bbdata = HttpTestData.where(:test_time.gte => time_begin, :test_time.lt => time_end,:source_node_name => BACKBONE, :dest_url =>line[2],:dest_locale.in => %w(联通 电信))
+      bbdata = HttpTestData.where(:test_time.gte => time_begin, :test_time.lt => time_end, :source_node_name => BACKBONE, :dest_url => line[2])
       unless bbdata.blank?
         if bbdata.size == 1
-          tmp_arr << [bbdata.first.test_time, BACKBONE, bbdata.first.dest_url, bbdata.first.time_to_index, bbdata.first.total_time, bbdata.first.throughput_time, bbdata.first.connection_sr, bbdata.first.index_page_loading_sr]
-          @out << tmp_arr
+          if bbdata.dest_locale =~ /电信/ || bbdata.dest_locale =~ /联通/
+            tmp_arr << [bbdata.first.test_time, BACKBONE, bbdata.first.dest_url, bbdata.first.time_to_index, bbdata.first.total_time, bbdata.first.throughput_time, bbdata.first.connection_sr, bbdata.first.index_page_loading_sr]
+            @out << tmp_arr
+          end
         else
           bbdata.each do |bb|
-            tmp_arr << [bb.test_time, BACKBONE, bb.dest_url, bb.time_to_index, bb.total_time, bb.throughput_time, bb.connection_sr, bb.index_page_loading_sr]
+            if bbdata.dest_locale =~ /电信/ || bbdata.dest_locale =~ /联通/
+              tmp_arr << [bb.test_time, BACKBONE, bb.dest_url, bb.time_to_index, bb.total_time, bb.throughput_time, bb.connection_sr, bb.index_page_loading_sr]
+            end
           end
           @out << tmp_arr
         end
       end
     end
 
-  @out = @out.paginate(page: params[:page], per_page: 5)
+    @out = @out.paginate(page: params[:page], per_page: 5)
   end
 end
