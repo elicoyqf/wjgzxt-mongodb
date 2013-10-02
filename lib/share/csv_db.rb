@@ -88,10 +88,10 @@ module CsvDb
         dx_tmp = HttpTestData.where(:test_time.gte => time_begin, :test_time.lt => time_end, dest_url: dx_line.dest_url)
         dx_tmp.each do |dt|
           if dt.source_node_name[-4..-3] == '电信'
-            dx += 1
+            dx    += 1
             dx_hr += 1 if dt.dest_locale.to_s.strip == '电信'
           elsif dt.source_node_name[-4..-3] =='联通'
-            lt += 1
+            lt    += 1
             lt_hr += 1 if dt.dest_locale.to_s.strip == '联通'
           end
         end
@@ -114,10 +114,10 @@ module CsvDb
         lt_tmp = HttpTestData.where(:test_time.gte => time_begin, :test_time.lt => time_end, dest_url: lt_line.dest_url)
         lt_tmp.each do |ltmp|
           if ltmp.source_node_name[-4..-3] == '电信'
-            dx += 1
+            dx    += 1
             dx_hr += 1 if ltmp.dest_locale.to_s.strip == '电信'
           elsif ltmp.source_node_name[-4..-3] == '联通'
-            lt += 1
+            lt    += 1
             lt_hr += 1 if ltmp.dest_locale.to_s.strip == '联通'
           end
 
@@ -155,24 +155,27 @@ module CsvDb
           end
           match << es.dest_url
         end
-        negative_statis = nega_val.to_f / match.size.to_f
-        total_statis    = total_val.to_f / match.size.to_f
-        HttpTestStatis.create(export_name:  e_name, start_time: time_begin, end_time: time_end, negative_statis: negative_statis,
-                              total_statis: total_statis, negative_num: nega_num, all_match_num: match.size)
 
-        #如果其得负分的浏览网站数量/总测试浏览网站数量*100%≥60%（相同归属运营商的比较）；则发送邮件
-        nega_r = nega_num.to_f / match.size.to_f
-        if nega_r >= 0.6
-          unless ExportName.where(alias: e_name).user.blank?
-            email = ExportName.where(alias: e_name).user.email
-            en    = ExportName.where(alias: e_name).name
-            begin
-              Notifier.notifier_mail(email, nega_num, match.size, time_begin, time_end, en).deliver
-            rescue
-              next
+        unless match.blank?
+          negative_statis = nega_val.to_f / match.size.to_f
+          total_statis    = total_val.to_f / match.size.to_f
+          HttpTestStatis.create(export_name:  e_name, start_time: time_begin, end_time: time_end, negative_statis: negative_statis,
+                                total_statis: total_statis, negative_num: nega_num, all_match_num: match.size)
+
+          #如果其得负分的浏览网站数量/总测试浏览网站数量*100%≥60%（相同归属运营商的比较）；则发送邮件
+          nega_r = nega_num.to_f / match.size.to_f
+          if nega_r >= 0.6
+            unless ExportName.where(alias: e_name).user.blank?
+              email = ExportName.where(alias: e_name).user.email
+              en    = ExportName.where(alias: e_name).name
+              begin
+                Notifier.notifier_mail(email, nega_num, match.size, time_begin, time_end, en).deliver
+              rescue
+                next
+              end
             end
+            EmailNotifierLog.create(export_name: e_name, time_begin: time_begin, time_end: time_end, nega_num: nega_num, total_match_num: match.size)
           end
-          EmailNotifierLog.create(export_name: e_name, time_begin: time_begin, time_end: time_end, nega_num: nega_num, total_match_num: match.size)
         end
 
         #得负分的浏览网站数量环比上一测试周期增加50%；（相同归属运营商的比较）
@@ -207,7 +210,7 @@ module CsvDb
       t_e = time_end
 
       blackbone_data = blackbone_data_valid(t_b, t_e, ds)
-      other_data = other_data_valid(t_b, t_e, ds)
+      other_data     = other_data_valid(t_b, t_e, ds)
       puts '*'*50
       puts other_data.inspect
 
