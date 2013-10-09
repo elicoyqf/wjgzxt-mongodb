@@ -91,7 +91,7 @@ production:
     shard:
       # This configuration is a Mongos shard server.
       hosts:
-        - 127.0.0.1:20000
+        - 61.235.68.51:20000
       database: boss
 
   # Here we put the Mongoid specific configuration options. These are explained
