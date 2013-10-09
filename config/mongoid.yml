@@ -83,6 +83,7 @@ test:
 production:
   sessions:
     default:
+    database: boss
       shard:
         hosts:
           - 61.235.68.51:20000
