@@ -83,11 +83,13 @@ test:
 production:
   sessions:
     default:
-    database: boss
-      shard:
-        hosts:
-          - 61.235.68.51:20000
-        database: boss
+      hosts:
+        - 127.0.0.1:20000
+      database: boss
+    shard:
+      hosts:
+        - 61.235.68.51:20000
+      database: boss
   options:
     allow_dynamic_fields: false
     identity_map_enabled: true
