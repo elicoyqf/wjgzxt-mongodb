@@ -86,6 +86,8 @@ production:
       hosts:
         - 61.235.68.51:20000
       database: boss
+      username: admin
+      password: whzx!QAZ2wsx
   options:
     allow_dynamic_fields: false
     identity_map_enabled: true
