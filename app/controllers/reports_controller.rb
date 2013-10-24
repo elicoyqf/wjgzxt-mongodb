@@ -254,7 +254,7 @@ class ReportsController < ApplicationController
     time_begin = Time.parse(new_str).at_beginning_of_month
     time_end   = time_begin + 1.month
 
-    @time_begin = Time.parse(new_str).at_beginning_of_month + 8.hour
+    @time_begin = Time.parse(new_str).at_beginning_of_month
     @time_end   = @time_begin + 1.month
 
     @dx, @lt, @oe, @total_pos, @total_neg, @total_eql, @dx_array, @lt_array = cal_export_ranking time_begin, time_end, ef
