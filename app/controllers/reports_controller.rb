@@ -220,13 +220,13 @@ class ReportsController < ApplicationController
     #将停用的出口数据在天报表中屏蔽掉。
     ef         = ExportName.where(:user_id => current_user.id, status: 0)
     s_day      = params[:s_day]
-    time_begin = Time.parse(s_day).at_beginning_of_day
-    time_end   = time_begin + 1.day
+    @time_begin = Time.parse(s_day).at_beginning_of_day
+    @time_end   = time_begin + 1.day
 
-    @time_begin = time_begin + 8.hour
-    @time_end   = @time_begin + 1.day
+    #@time_begin = time_begin + 8.hour
+    #@time_end   = @time_begin + 1.day
 
-    @dx, @lt, @oe, @total_pos, @total_neg, @total_eql, @dx_array, @lt_array = cal_export_ranking time_begin, time_end, ef
+    @dx, @lt, @oe, @total_pos, @total_neg, @total_eql, @dx_array, @lt_array = cal_export_ranking @time_begin, @time_end, ef
     render :template => 'reports/export_ranking'
   end
 
@@ -235,12 +235,12 @@ class ReportsController < ApplicationController
     #将停用的出口数据在周报表中屏蔽掉。
     ef          = ExportName.where(:user_id => current_user.id, status: 0)
     #[dx,lt,oe,total_pos,total_neg,total_eql,dx_array,lt_array]
-    time_begin  = Time.parse(params[:day_begin]).at_beginning_of_day
-    time_end    = Time.parse(params[:day_end]).at_beginning_of_day + 1.day
-    @time_begin = time_begin + 8.hour
-    @time_end   = time_end + 8.hour
+    @time_begin  = Time.parse(params[:day_begin]).at_beginning_of_day
+    @time_end    = Time.parse(params[:day_end]).at_beginning_of_day + 1.day
+    #@time_begin = time_begin + 8.hour
+    #@time_end   = time_end + 8.hour
 
-    @dx, @lt, @oe, @total_pos, @total_neg, @total_eql, @dx_array, @lt_array = cal_export_ranking time_begin, time_end, ef
+    @dx, @lt, @oe, @total_pos, @total_neg, @total_eql, @dx_array, @lt_array = cal_export_ranking @time_begin, @time_end, ef
     render :template => 'reports/export_ranking'
   end
 
@@ -251,13 +251,13 @@ class ReportsController < ApplicationController
     ms          = params[:ms]
     tmp_str     = Time.now.year.to_s
     new_str     = tmp_str + '-' + ms + '-01'
-    time_begin = Time.parse(new_str).at_beginning_of_month
-    time_end   = time_begin + 1.month
+    @time_begin = Time.parse(new_str).at_beginning_of_month
+    @time_end   = time_begin + 1.month
 
-    @time_begin = time_begin + 8.hour
-    @time_end   = @time_begin + 1.month
+    #@time_begin = time_begin + 8.hour
+    #@time_end   = @time_begin + 1.month
 
-    @dx, @lt, @oe, @total_pos, @total_neg, @total_eql, @dx_array, @lt_array = cal_export_ranking time_begin, time_end, ef
+    @dx, @lt, @oe, @total_pos, @total_neg, @total_eql, @dx_array, @lt_array = cal_export_ranking @time_begin, @time_end, ef
     render :template => 'reports/export_ranking'
   end
 
