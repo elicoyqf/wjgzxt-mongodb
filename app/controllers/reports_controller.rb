@@ -223,7 +223,7 @@ class ReportsController < ApplicationController
     time_begin = Time.parse(s_day).at_beginning_of_day
     time_end   = time_begin + 1.day
 
-    @time_begin = Time.parse(s_day).at_beginning_of_day + 8.hour
+    @time_begin = Time.parse(s_day).at_beginning_of_day 
     @time_end   = @time_begin + 1.day
 
     @dx, @lt, @oe, @total_pos, @total_neg, @total_eql, @dx_array, @lt_array = cal_export_ranking time_begin, time_end, ef
