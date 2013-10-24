@@ -165,9 +165,9 @@ module CsvDb
           #如果其得负分的浏览网站数量/总测试浏览网站数量*100%≥60%（相同归属运营商的比较）；则发送邮件
           nega_r = nega_num.to_f / match.size.to_f
           if nega_r >= 0.6
-            unless ExportName.where(alias: e_name).user.blank?
-              email = ExportName.where(alias: e_name).user.email
-              en    = ExportName.where(alias: e_name).name
+            unless ExportName.where(alias: e_name).first.user.blank?
+              email = ExportName.where(alias: e_name).first.user.email
+              en    = ExportName.where(alias: e_name).first.name
               begin
                 Notifier.notifier_mail(email, nega_num, match.size, time_begin, time_end, en).deliver
               rescue
@@ -188,9 +188,9 @@ module CsvDb
           unless an_hour_age_hts.negative_num.blank?
 
             if nega_num.to_f > 1.5 * an_hour_age_hts.negative_num.to_f
-              unless ExportName.where(alias: e_name).user.blank?
-                email = ExportName.where(alias: e_name).user.email
-                en    = ExportName.where(alias: e_name).name
+              unless ExportName.where(alias: e_name).first.user.blank?
+                email = ExportName.where(alias: e_name).first.user.email
+                en    = ExportName.where(alias: e_name).first.name
                 begin
                   Notifier.notifier_degradation_mail(email, nega_num, an_hour_age_hts.negative_num, time_begin, time_end, en).deliver
                 rescue
