@@ -251,13 +251,13 @@ class ReportsController < ApplicationController
     ms          = params[:ms]
     tmp_str     = Time.now.year.to_s
     new_str     = tmp_str + '-' + ms + '-01'
-    @time_begin = Time.parse(new_str).at_beginning_of_month
+    time_begin = Time.parse(new_str).at_beginning_of_month
+    time_end   = time_begin + 1.month
+
+    @time_begin = Time.parse(new_str).at_beginning_of_month + 8.hour
     @time_end   = @time_begin + 1.month
 
-    #@time_begin = time_begin + 8.hour
-    #@time_end   = @time_begin + 1.month
-
-    @dx, @lt, @oe, @total_pos, @total_neg, @total_eql, @dx_array, @lt_array = cal_export_ranking @time_begin, @time_end, ef
+    @dx, @lt, @oe, @total_pos, @total_neg, @total_eql, @dx_array, @lt_array = cal_export_ranking time_begin, time_end, ef
     render :template => 'reports/export_ranking'
   end
 
