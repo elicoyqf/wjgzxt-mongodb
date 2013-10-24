@@ -221,7 +221,7 @@ class ReportsController < ApplicationController
     ef         = ExportName.where(:user_id => current_user.id, status: 0)
     s_day      = params[:s_day]
     @time_begin = Time.parse(s_day).at_beginning_of_day
-    @time_end   = time_begin + 1.day
+    @time_end   = @time_begin + 1.day
 
     #@time_begin = time_begin + 8.hour
     #@time_end   = @time_begin + 1.day
@@ -252,7 +252,7 @@ class ReportsController < ApplicationController
     tmp_str     = Time.now.year.to_s
     new_str     = tmp_str + '-' + ms + '-01'
     @time_begin = Time.parse(new_str).at_beginning_of_month
-    @time_end   = time_begin + 1.month
+    @time_end   = @time_begin + 1.month
 
     #@time_begin = time_begin + 8.hour
     #@time_end   = @time_begin + 1.month
