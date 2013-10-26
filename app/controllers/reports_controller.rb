@@ -144,17 +144,31 @@ class ReportsController < ApplicationController
   end
 
   def locale_ranking
-    dx            = TestDestNode.where(:locale => '电信').size
-    lt            = TestDestNode.where(:locale => '联通').size
-    yd            = TestDestNode.where(:locale => '移动').size
-    tt            = TestDestNode.where(:locale => '铁通').size
-    other         = TestDestNode.all.size - dx - lt - yd -tt
+    dx = 0
+    lt = 0
+    oe = 0
+    yd = 0
+    tt = 0
+    TestDestNode.all.each do |tdn|
+      if contrast_locale tdn.locale.to_s, '电信'
+        dx += 1
+      elsif contrast_locale tdn.locale.to_s, '联通'
+        lt += 1
+      elsif contrast_locale tdn.locale.to_s, '移动'
+        yd += 1
+      elsif contrast_locale tdn.locale.to_s, '铁通'
+        tt += 1
+      else
+        oe += 1
+      end
+    end
+
     @locale       = {}
     @locale['电信'] = dx
     @locale['联通'] = lt
     @locale['移动'] = yd
     @locale['铁通'] = tt
-    @locale['其它'] = other
+    @locale['其它'] = oe
   end
 
   def time_report
@@ -247,10 +261,10 @@ class ReportsController < ApplicationController
   def month_report
     #[dx,lt,oe,total_pos,total_neg,total_eql,dx_array,lt_array]
     #将停用的出口数据在月报表中屏蔽掉。
-    ef          = ExportName.where(user_id: current_user.id, status: 0)
-    ms          = params[:ms]
-    tmp_str     = Time.now.year.to_s
-    new_str     = tmp_str + '-' + ms + '-01'
+    ef         = ExportName.where(user_id: current_user.id, status: 0)
+    ms         = params[:ms]
+    tmp_str    = Time.now.year.to_s
+    new_str    = tmp_str + '-' + ms + '-01'
     time_begin = Time.parse(new_str).at_beginning_of_month
     time_end   = time_begin + 1.month
 
@@ -277,10 +291,11 @@ class ReportsController < ApplicationController
 
   def locale_detail
     @lc = params[:lc]
-    if @lc != '其它'
-      @out_lc = TestDestNode.where(:locale => @lc)
-    else
-      @out_lc = TestDestNode.where(:locale.nin => ['电信', '联通', '移动', '铁通'])
+    @out_lc =[]
+    TestDestNode.all.each do |tdn|
+      if contrast_locale tdn.locale.to_s, @lc
+        @out_lc << tdn
+      end
     end
   end
 end
