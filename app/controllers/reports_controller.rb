@@ -124,10 +124,26 @@ class ReportsController < ApplicationController
     #将对比标杆出口去掉
     @e_name.delete(BACKBONE)
     @out_data = []
+    map = %Q{
+      function() {
+        emit(this.name, { nega_scores: this.negative_items_scores });
+      }
+    }
+
+    reduce = %Q{
+      function(key, values) {
+        var result = { nega_scores: 0 };
+        values.forEach(function(value) {
+          result.nega_scores += value.negative_items_scores;
+        });
+        return result;
+      }
+    }
+
     @e_name.each do |fuck|
       tmp_arr = []
       tmp_arr << fuck
-      nega_scores = hdata.where(:source_node_name => fuck).group_by{|d| d.dest_url}.sum(:negative_items_scores)
+      nega_scores = hdata.where(:source_node_name => fuck).map_reduce(map,reduce).out(inline: true)
       #nega_scores = hdata.where(:source_node_name => fuck).group_by(&:dest_url).sum(:negative_items_scores)
       puts nega_scores.inspect
       sns = nega_scores.to_a.sort_by! { |a, b| b }[0..4]
