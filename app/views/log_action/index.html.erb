@@ -44,7 +44,7 @@
             <tbody>
             <% @enl.each do |line| %>
               <tr>
-                <td style="text-align:center;"><%= ExportName.find_by_alias(line.export_name).name %></td>
+                <td style="text-align:center;"><%= ExportName.where(alias: line.export_name).first.name %></td>
                 <td style="text-align:center;"><%= line.time_begin.strftime('%Y年%m月%d日 %H:%M:%S') %> - <%= line.time_end.strftime('%H:%M:%S') %></td>
                 <td style="text-align:center;"><%= line.nega_num %></td>
                 <td style="text-align:center;"><%= line.total_match_num %></td>
@@ -69,7 +69,7 @@
             <tbody>
             <% @edl.each do |line| %>
               <tr>
-                <td style="text-align:center;"><%= ExportName.find_by_alias(line.export_name).name %></td>
+                <td style="text-align:center;"><%= ExportName.where(alias: line.export_name).first.name %></td>
                 <td style="text-align:center;"><%= line.time_begin.strftime('%Y年%m月%d日 %H:%M:%S') %> - <%= line.time_end.strftime('%H:%M:%S') %></td>
                 <td style="text-align:center;"><%= line.nega_r %></td>
                 <td style="text-align:center;"><%= line.last_time_r %></td>
