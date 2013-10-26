@@ -133,7 +133,7 @@ class ReportsController < ApplicationController
       tmp_hash = {}
       @tdn.each do |tt|
         nega_scores  = hdata.where(:source_node_name => fuck, dest_url: tt.dest_url).sum(:negative_items_scores)
-        tmp_hash[tt] = nega_scores
+        tmp_hash[tt.dest_node_name] = nega_scores
       end
       #puts nega_scores.inspect
       sns = tmp_hash.to_a.sort_by! { |a, b| b }[0..4]
