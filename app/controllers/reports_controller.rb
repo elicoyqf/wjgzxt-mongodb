@@ -132,7 +132,7 @@ class ReportsController < ApplicationController
       #nega_scores = hdata.where(:source_node_name => fuck).group_by(&:dest_url).sum(:negative_items_scores)
       tmp_hash = {}
       @tdn.each do |tt|
-        nega_scores  = hdata.where(:source_node_name => fuck, dest_url: tt).sum(:negative_items_scores)
+        nega_scores  = hdata.where(:source_node_name => fuck, dest_url: tt.dest_url).sum(:negative_items_scores)
         tmp_hash[tt] = nega_scores
       end
       #puts nega_scores.inspect
