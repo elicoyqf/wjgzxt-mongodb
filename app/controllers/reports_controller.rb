@@ -126,7 +126,7 @@ class ReportsController < ApplicationController
     @out_data = []
     map = %Q{
       function() {
-        emit(this.name, { nega_scores: this.negative_items_scores });
+        emit(this.source_node_name, { nega_scores: this.negative_items_scores });
       }
     }
 
