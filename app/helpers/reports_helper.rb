@@ -84,11 +84,9 @@ module ReportsHelper
       end
       odata << tmp_arr
     end
-=begin
     unless odata.blank?
       odata.sort_by! { |x| x[9] }
     end
-=end
     [title_name, odata.paginate(page: params[:page], per_page: 10)]
   end
 
@@ -127,7 +125,8 @@ negative_items_scores equal_items_scores total_scores)
     if ef.blank?
       #查询当月的月表数据
       #en = ExportName.where('user_id != 0')
-      en = ExportName.where(:user_id.ne => 0)
+      #en = ExportName.where(:user_id.ne => 0)
+      en = ExportName.where(:status.ne => 0)
       en.each do |line|
         unless line.alias.blank?
           etn << line.alias
