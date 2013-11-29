@@ -71,7 +71,7 @@ module ReportsHelper
     odata = []
     etn.each do |ename|
       tmp_arr = []
-      tmp_arr << ExportName.where(alias: ename).first.name
+      tmp_arr << ExportName.where(alias: ename, status: 0).first.name
       #tmp_data = HttpTestScore.select(key).where('test_time >= ? and test_time < ?', time_begin, time_end).order('total_scores DESC').paginate page: params[:page], per_page: 10
       #tmp_data = HttpTestScore.select(key).where('test_time >= ? and test_time < ? and source_node_name = ?', time_begin, time_end, ename)
       tmp_data = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_end, source_node_name: ename)
