@@ -82,7 +82,7 @@ module ReportsHelper
           tmp_arr << line.positive_items_scores << line.negative_items_scores << line.total_scores
         end
       end
-      odata += tmp_arr
+      odata << tmp_arr
     end
 =begin
     unless odata.blank?
