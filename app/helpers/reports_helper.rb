@@ -82,7 +82,7 @@ module ReportsHelper
           tmp_arr << line.positive_items_scores << line.negative_items_scores << line.total_scores
         end
       end
-      odata << tmp_arr
+      odata += tmp_arr
     end
 =begin
     unless odata.blank?
@@ -127,8 +127,8 @@ negative_items_scores equal_items_scores total_scores)
     if ef.blank?
       #查询当月的月表数据
       #en = ExportName.where('user_id != 0')
-      en = ExportName.where(:user_id.ne => 0)
-      #en = ExportName.where(:status => 0)
+      #en = ExportName.where(:user_id.ne => 0)
+      en = ExportName.where(:status => 0)
       en.each do |line|
         unless line.alias.blank?
           etn << line.alias
