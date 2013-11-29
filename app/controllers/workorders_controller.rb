@@ -90,7 +90,7 @@ class WorkordersController < ApplicationController
   def export_detail
     #现在是统计一天的数据
     @q_export = params[:ename]
-    snn       = ExportName.where(:name => @q_export).alias
+    snn       = ExportName.where(:name => @q_export).first.alias
     b_time    = Time.parse(params[:bdate])
     e_time    = Time.parse(params[:edate])
     #只查询出来那些测试为负的数据。
