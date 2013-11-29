@@ -127,8 +127,8 @@ negative_items_scores equal_items_scores total_scores)
     if ef.blank?
       #查询当月的月表数据
       #en = ExportName.where('user_id != 0')
-      #en = ExportName.where(:user_id.ne => 0)
-      en = ExportName.where(:status => 0)
+      en = ExportName.where(:user_id.ne => 0)
+      #en = ExportName.where(:status => 0)
       en.each do |line|
         unless line.alias.blank?
           etn << line.alias
