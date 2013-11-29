@@ -84,7 +84,7 @@ module ReportsHelper
       end
       odata << tmp_arr
     end
-    unless odata.blank?
+    unless odata.nil?
       odata.sort_by! { |x| x[9] }
     end
     [title_name, odata.paginate(page: params[:page], per_page: 10)]
