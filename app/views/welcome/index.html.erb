@@ -34,7 +34,7 @@
       <div class="span12">
         <div class="row-fluid hidden-desktop hidden-phone">
           <div class="span12">
-            <h4 class="welcome">以下是您所管辖的出口在 [<%= @time_begin.strftime('%Y年-%m月%d日 %H:%M:%S') %>] - [<%= @time_end.strftime('%Y年-%m月%d日 %H:%M:%S') %>]
+            <h4 class="welcome">以下是您所管辖的出口在 [<%= @time_begin.localtime.strftime('%Y年-%m月%d日 %H:%M:%S') %>] - [<%= @time_end.localtime.strftime('%Y年-%m月%d日 %H:%M:%S') %>]
               内的得分情况：</h4>
             <h4 class="title">出口得分排名表如下示：</h4>
 
