@@ -44,8 +44,8 @@ namespace :database do
   task :analyse_data => :environment do
     #取前一个小时的数据进行自动分析
     tb         = Time.now
-    time_begin = Time.now.at_beginning_of_hour - 2.hour + 8.hour
-    time_end   = Time.now.at_beginning_of_hour - 1.hour + 8.hour
+    time_begin = Time.now.at_beginning_of_hour - 2.hour
+    time_end   = Time.now.at_beginning_of_hour - 1.hour
 
     #通过数据进行分析
     a_data     = CsvDb::CsvProcedure.new
