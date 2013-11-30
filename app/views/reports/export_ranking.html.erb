@@ -13,8 +13,8 @@
           计算方法是：出口得分 / 有效匹配网站数，从而得出平均值。因为每个出口所匹配的有效数不一致，只能取其平均值。<br/>
           目前本系统中含最新一次测试数据中含电信方向出口共 <%= @dx %> 个,联通方向出口共 <%= @lt %> 个，其它方向出口共 <%= @oe %> 个暂未纳入评分。如对结果有异议，可申请核对。
         </p>
-        本次统计区间 <span class="label label-warning">[<%= @time_begin.strftime('%Y年-%m月%d日 %H:%M:%S') %>]</span> -
-        <span class="label label-warning">[<%= @time_end.strftime('%Y年-%m月%d日 %H:%M:%S') %>]</span> ，数据如下示：
+        本次统计区间 <span class="label label-warning">[<%= @time_begin.localtime.strftime('%Y年-%m月%d日 %H:%M:%S') %>]</span> -
+        <span class="label label-warning">[<%= @time_end.localtime.strftime('%Y年-%m月%d日 %H:%M:%S') %>]</span> ，数据如下示：
         总分是正分的有 <%= @total_pos %> 个，总分是负分的有 <%= @total_neg %>个,总分为0分的有 <%= @total_eql %> 个。
       </div>
     </div>
