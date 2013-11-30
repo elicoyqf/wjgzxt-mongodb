@@ -17,7 +17,7 @@ module UtiltilyTools
       #backbone_data = ds.where('source_node_name = ? and test_time >= ? and test_time < ?', BACKBONE, time_begin, time_end)
       backbone_data = ds.where(source_node_name: BACKBONE, :test_time.gte => time_begin, :test_time.lt => time_end)
     end
-    puts 'blackbone_data_valid---->' + time_begin.to_s + ':' + time_end.to_s
+    #puts 'blackbone_data_valid---->' + time_begin.to_s + ':' + time_end.to_s
     new_backbone_data = []
     backbone_data.each do |bline|
       host_locale =''
@@ -44,7 +44,7 @@ module UtiltilyTools
       #other_data = ds.where('source_node_name != ? and test_time >= ? and test_time < ?', BACKBONE, time_begin, time_end)
       other_data = ds.where(:source_node_name.ne => BACKBONE, :test_time.gte => time_begin, :test_time.lt => time_end)
     end
-    puts 'other_data_valid---->' + time_begin.to_s + ':' + time_end.to_s
+    #puts 'other_data_valid---->' + time_begin.to_s + ':' + time_end.to_s
     new_data =[]
     other_data.each do |line|
       #编号要去出口对应关系里面找对应关系
