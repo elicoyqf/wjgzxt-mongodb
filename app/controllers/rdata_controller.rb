@@ -25,35 +25,33 @@ class RdataController < ApplicationController
     oth_arr    = []
     @out       = []
     if e_name.blank?
-      ena = ExportName.all
+      ena = ExportName.where(:status => 0)
       ena.each do |en|
-        tmp_arr   = []
         p_records = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_end, :source_node_name => en.alias, :total_scores.lt => 0)
         unless p_records.blank?
           p_records.each do |line|
-            q_data = HttpTestData.where(:test_time => line.test_time, :dest_node_name => line.dest_node_name, :dest_url => line.dest_url).first
+            tmp_arr = []
+            q_data  = HttpTestData.where(:test_time => line.test_time, :dest_node_name => line.dest_node_name, :dest_url => line.dest_url).first
             unless q_data.blank?
               tmp_arr << q_data.test_time << en.name << q_data.dest_url << q_data.time_to_index << q_data.total_time << q_data.throughput_time << q_data.connection_sr << q_data.index_page_loading_sr
+              oth_arr << tmp_arr
             end
           end
         end
-
-        oth_arr << tmp_arr
       end
     else
       e_name.each do |en|
-        tmp_arr   = []
         p_records = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_end, :source_node_name => en.alias, :total_scores.lt => 0)
         unless p_records.blank?
           p_records.each do |line|
-            q_data = HttpTestData.where(:test_time => line.test_time, :dest_node_name => line.dest_node_name, :dest_url => line.dest_url).first
+            tmp_arr = []
+            q_data  = HttpTestData.where(:test_time => line.test_time, :dest_node_name => line.dest_node_name, :dest_url => line.dest_url).first
             unless q_data.blank?
               tmp_arr << q_data.test_time << en.name << q_data.dest_url << q_data.time_to_index << q_data.total_time << q_data.throughput_time << q_data.connection_sr << q_data.index_page_loading_sr
+              oth_arr << tmp_arr
             end
           end
         end
-
-        oth_arr << tmp_arr
       end
     end
 
