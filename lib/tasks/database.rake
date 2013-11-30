@@ -53,6 +53,8 @@ namespace :database do
     a_data.statis_data_to_db(time_begin, time_end)
     #a_data.statis_web_hit_rate(time_begin,time_end)
     te = Time.now
+    puts 'time_begin is :' + time_begin.to_s
+    puts 'time_end   is :' + time_end.to_s
     puts 'analyse_data total time is ====> ' + (te-tb).to_s + ' second.'
   end
 

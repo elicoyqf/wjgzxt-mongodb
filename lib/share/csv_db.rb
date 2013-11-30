@@ -141,6 +141,8 @@ module CsvDb
         export << line.alias
       end
 
+      puts 'statis_data_to_db---->' + time_begin.to_s + ':' + time_end.to_s
+
       export.each do |e_name|
         nega_val  = 0
         nega_num  = 0
@@ -211,8 +213,8 @@ module CsvDb
 
       blackbone_data = blackbone_data_valid(t_b, t_e, ds)
       other_data     = other_data_valid(t_b, t_e, ds)
-      puts '*'*50
-      puts other_data.inspect
+      #puts '*'*50
+      #puts other_data.inspect
 
       other_data.each do |odata|
         flag_data = []
