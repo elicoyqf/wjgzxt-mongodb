@@ -219,7 +219,7 @@ module CsvDb
       other_data.each do |odata|
         flag_data = []
         blackbone_data.each do |bdata|
-          if  odata.dest_url == bdata.dest_url
+          if  odata.dest_url == bdata.dest_url && contrast_b_o_locale(bdata.dest_locale, odata.dest_locale)
             flag_data << bdata
           end
         end

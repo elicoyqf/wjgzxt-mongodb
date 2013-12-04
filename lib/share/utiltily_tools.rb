@@ -78,10 +78,20 @@ module UtiltilyTools
     elsif locale =~ /联通/
       ll = '联通'
     else
-      ll = '其它'
+      ll = '无用数据'
     end
 
     if ename =~ /#{ll}/
+      true
+    else
+      false
+    end
+  end
+
+  def contrast_b_o_locale(bb, other)
+    if bb =~ /电信/ && other =~ /电信/
+      true
+    elsif bb =~ /联通/ && other =~ /联通/
       true
     else
       false
