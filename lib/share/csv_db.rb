@@ -144,9 +144,11 @@ module CsvDb
       puts 'statis_data_to_db---->' + time_begin.to_s + ':' + time_end.to_s
 
       export.each do |e_name|
+        #临时变量数据归零
         nega_val  = 0
         nega_num  = 0
         total_val = 0
+        match.clear
         #export_s  = HttpTestScore.where('source_node_name = ? and test_time >= ? and test_time < ?', e_name, time_begin, time_end)
         export_s  = HttpTestScore.where(source_node_name: e_name, :test_time.gte => time_begin, :test_time.lt => time_end)
         export_s.each do |es|
