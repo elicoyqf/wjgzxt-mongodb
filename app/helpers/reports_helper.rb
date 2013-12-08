@@ -338,8 +338,8 @@ negative_items_scores equal_items_scores total_scores)
           end
         end
 
-        t_array << negative_total
-        t_array << all_total
+        t_array << (negative_total / 2.5)
+        t_array << (all_total / 2.5)
         t_array << negative_web
         t_array << match_web.size
         mws = match_web.size
