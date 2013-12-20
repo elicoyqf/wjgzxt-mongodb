@@ -9,20 +9,21 @@ namespace :database do
     time                 = Time.now.at_beginning_of_hour - 2.hour
     postfix              = time.strftime('%Y%m%d%H%M') + '.csv'
     #http_filename        = 'E:/HTTP_201308202000.csv'
-    http_filename        = '/home/wgdata/HTTP_' + postfix
-    trace_route_filename = '/home/wgdata/TEST'
-    video_filename       = '/home/wgdata/TEST'
-    ping_filename        = '/home/wgdata/TEST'
+    telcom_http_filename        = '/home/wgdata/telcom_HTTP_' + postfix
+    unicom_http_filename        = '/home/wgdata/unicom_HTTP_' + postfix
+    #trace_route_filename = '/home/wgdata/TEST'
+    #video_filename       = '/home/wgdata/TEST'
+    #ping_filename        = '/home/wgdata/TEST'
     #暂时先不处理其它几个文件了
     #trace_route_filename = '/home/wgdata/TRACE ROUTE_' + postfix
     #video_filename       = '/home/wgdata/Video_' + postfix
     #ping_filename        = '/home/wgdata/PING_' + postfix
     filename             = []
     #filename << file
-    filename << http_filename
-    filename << trace_route_filename
-    filename << video_filename
-    filename << ping_filename
+    filename << unicom_http_filename
+    filename << telcom_http_filename
+    #filename << video_filename
+    #filename << ping_filename
 
     update_db = CsvDb::CsvProcedure.new
     update_db.csv_to_db filename
