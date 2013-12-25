@@ -12,12 +12,12 @@ module CsvDb
     def csv_to_db(filename)
       #file = Rails.root.join('public', 'HTTP_201305180800.csv')
       #每天生成一张表，将原来的表进行rename
+      TestDestNode.delete_all
       filename.each do |fname|
         case fname
           when /HTTP/
             if File.exist? fname
-              i = 1
-              TestDestNode.delete_all
+              i      = 1
               e_name = Set.new
               CSV.foreach(fname, encoding: 'GB2312:UTF-8', headers: true) do |row|
                 HttpTestData.create(test_time:       Time.parse(row[0]), source_node_name: row[1], source_ip_address: row[2], source_group: row[3], dest_node_name: row[4],
@@ -150,7 +150,7 @@ module CsvDb
         total_val = 0
         match.clear
         #export_s  = HttpTestScore.where('source_node_name = ? and test_time >= ? and test_time < ?', e_name, time_begin, time_end)
-        export_s  = HttpTestScore.where(source_node_name: e_name, :test_time.gte => time_begin, :test_time.lt => time_end)
+        export_s = HttpTestScore.where(source_node_name: e_name, :test_time.gte => time_begin, :test_time.lt => time_end)
         export_s.each do |es|
           total_val += es.total_scores
           if es.total_scores < 0
