@@ -284,9 +284,9 @@ negative_items_scores equal_items_scores total_scores)
     #dx = TestDestNode.where(:locale => '电信').count
     #lt = TestDestNode.where(:locale => '联通').count
     #oe = TestDestNode.all.count - dx - lt
-    dx = 0
-    lt = 0
-    oe = 0
+    dx  = 0
+    lt  = 0
+    oe  = 0
     TestDestNode.all.each do |tdn|
       if contrast_locale tdn.locale.to_s, '电信'
         dx += 1
@@ -340,8 +340,18 @@ negative_items_scores equal_items_scores total_scores)
           end
         end
 
-        t_array << (negative_total / 1.5)
-        t_array << (all_total / 1.5)
+        if negative_total.blank?
+          t_array << 0
+        else
+          t_array << (negative_total / 1.5)
+        end
+
+        if all_total.blank?
+          t_array << 0
+        else
+          t_array << (all_total / 1.5)
+        end
+
         t_array << negative_web
         t_array << match_web.size
         mws = match_web.size

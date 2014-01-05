@@ -95,10 +95,16 @@
   <div class="row-fluid">
     <%= form_tag('month_report', :method => 'post', class: 'well form-horizontal') do %>
       <span class="span4 offset2 pull-left">
+        选择年份
+        <%= select_tag :year, options_from_collection_for_select(@year, :first, :last), class: 'span8' -%>
+      </span>
+      <span class="span4 offset2 pull-left">
         选择月份
         <%= select_tag :ms, options_from_collection_for_select(@ms, :first, :last), class: 'span8' -%>
       </span>
+      <div class="row-fluid">
       <%= submit_tag('月 报 表 查 询', class: 'btn btn-info span2') %>
+      </div>
     <% end %>
   </div>
 

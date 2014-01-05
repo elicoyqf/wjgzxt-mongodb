@@ -11,6 +11,10 @@ class ReportsController < ApplicationController
     (1..12).each do |n|
       @ms << [n, n.to_s+'月']
     end
+    @year = []
+    (2013..2030).each do |n|
+      @year << [n, n.to_s+'年']
+    end
   end
 
   def select_date_report
@@ -132,7 +136,7 @@ class ReportsController < ApplicationController
       #nega_scores = hdata.where(:source_node_name => fuck).group_by(&:dest_url).sum(:negative_items_scores)
       tmp_hash = {}
       @tdn[0..4].each do |tt|
-        nega_scores  = hdata.where(:source_node_name => fuck, dest_url: tt.dest_url).sum(:negative_items_scores)
+        nega_scores                 = hdata.where(:source_node_name => fuck, dest_url: tt.dest_url).sum(:negative_items_scores)
         tmp_hash[tt.dest_node_name] = nega_scores
       end
       #puts nega_scores.inspect
@@ -238,8 +242,8 @@ class ReportsController < ApplicationController
   def day_report
     #[dx,lt,oe,total_pos,total_neg,total_eql,dx_array,lt_array]
     #将停用的出口数据在天报表中屏蔽掉。
-    ef         = ExportName.where(:user_id => current_user.id, status: 0)
-    s_day      = params[:s_day]
+    ef          = ExportName.where(:user_id => current_user.id, status: 0)
+    s_day       = params[:s_day]
     #time_begin = Time.parse(s_day).at_beginning_of_day
     #time_end   = time_begin + 1.day
 
@@ -267,10 +271,11 @@ class ReportsController < ApplicationController
   def month_report
     #[dx,lt,oe,total_pos,total_neg,total_eql,dx_array,lt_array]
     #将停用的出口数据在月报表中屏蔽掉。
-    ef         = ExportName.where(user_id: current_user.id, status: 0)
-    ms         = params[:ms]
-    tmp_str    = Time.now.year.to_s
-    new_str    = tmp_str + '-' + ms + '-01'
+    ef          = ExportName.where(user_id: current_user.id, status: 0)
+    ms          = params[:ms]
+    year        = params[:year]
+    #tmp_str     = Time.now.year.to_s
+    new_str     = year + '-' + ms + '-01'
     #time_begin = Time.parse(new_str).at_beginning_of_month
     #time_end   = time_begin + 1.month
 
