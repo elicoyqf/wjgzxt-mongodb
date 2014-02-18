@@ -274,16 +274,9 @@ negative_items_scores equal_items_scores total_scores)
     etn.delete(BACKBONE)
     hts = HttpTestStatis.where(:start_time.gte => time_begin, :start_time.lt => time_end)
 
-=begin
-    puts '*'*100
-    puts etn.inspect
-    puts hts.inspect
-    puts '*'*100
-=end
+    #等数据更新后将可以启用新的算法
+    #hts = HttpTestStatisBtd.where(:start_time.gte => time_begin, :start_time.lt => time_end)
 
-    #dx = TestDestNode.where(:locale => '电信').count
-    #lt = TestDestNode.where(:locale => '联通').count
-    #oe = TestDestNode.all.count - dx - lt
     dx  = 0
     lt  = 0
     oe  = 0

@@ -130,6 +130,12 @@ module CsvDb
       end
     end
 
+    #更新当天的http数据
+    def statis_score_btd(time_begin, time_end)
+
+
+    end
+
     #统计单次的http数据
     def statis_data_to_db(time_begin, time_end)
       #可以优化，直接提取ExportName表中的数据即可。
@@ -165,6 +171,21 @@ module CsvDb
           total_statis    = total_val.to_f / match.size.to_f
           HttpTestStatis.create(export_name:  e_name, start_time: time_begin, end_time: time_end, negative_statis: negative_statis,
                                 total_statis: total_statis, negative_num: nega_num, all_match_num: match.size)
+
+          #更新当天的http数据
+          up_tmp = HttpTestStatisBtd.where(export_name: e_name, day: time_begin.at_beginning_of_day)
+          if up_tmp.blank?
+            HttpTestStatisBtd.create(export_name:  e_name, day: time_begin.at_beginning_of_day, negative_statis: negative_statis,
+                                     total_statis: total_statis, negative_num: nega_num, all_match_num: match.size)
+          else
+            ns = up_tmp.first.negative_statis + negative_statis
+            ts = up_tmp.first.total_statis + total_statis
+            nn = up_tmp.first.negative_num + nega_num
+            am = up_tmp.first.all_match_num + match.size
+
+            up_tmp.update(negative_statis: ns, total_statis: ts, negative_num: nn, all_match_num: am)
+
+          end
 
           #如果其得负分的浏览网站数量/总测试浏览网站数量*100%≥60%（相同归属运营商的比较）；则发送邮件
           nega_r = nega_num.to_f / match.size.to_f
