@@ -17,16 +17,16 @@ module CsvDb
         case fname
           when /HTTP/
             if File.exist? fname
-              i      = 1
+              i = 1
               e_name = Set.new
               CSV.foreach(fname, encoding: 'GB2312:UTF-8', headers: true) do |row|
-                HttpTestData.create(test_time:       Time.parse(row[0]), source_node_name: row[1], source_ip_address: row[2], source_group: row[3], dest_node_name: row[4],
-                                    dest_url:        row[5], dest_group: row[6], resolution_time: row[7], connection_time: row[8], time_to_first_byte: row[9],
-                                    time_to_index:   row[10], page_download_time: row[11], page_loading_time: row[12], total_time: row[13], throughput_time: row[14],
+                HttpTestData.create(test_time: Time.parse(row[0]), source_node_name: row[1], source_ip_address: row[2], source_group: row[3], dest_node_name: row[4],
+                                    dest_url: row[5], dest_group: row[6], resolution_time: row[7], connection_time: row[8], time_to_first_byte: row[9],
+                                    time_to_index: row[10], page_download_time: row[11], page_loading_time: row[12], total_time: row[13], throughput_time: row[14],
                                     overall_quality: row[15], resolution_sr: row[16], connection_sr: row[17], index_page_loading_sr: row[18],
-                                    page_loading_r:  row[19], loading_sr: row[20], dest_ip_address: row[21], dest_nationality: row[22], dest_province: row[23],
-                                    dest_locale:     row[24].to_s.strip, download_size: row[25], contents_size: row[26], return_code: row[27], add_ons: row[28],
-                                    element_number:  row[29])
+                                    page_loading_r: row[19], loading_sr: row[20], dest_ip_address: row[21], dest_nationality: row[22], dest_province: row[23],
+                                    dest_locale: row[24].to_s.strip, download_size: row[25], contents_size: row[26], return_code: row[27], add_ons: row[28],
+                                    element_number: row[29])
 
                 #更新归属地数据和测试网站相关信息
                 #直接将数据插入数据库即可，model进行限制去重。
@@ -44,24 +44,24 @@ module CsvDb
           when /Video/
             i = 1
             CSV.foreach(fname, encoding: 'GB2312:UTF-8', headers: true) do |row|
-              VideoTestData.create(test_time:            row[0], source_node_name: row[1], source_ip_address: row[2], source_group: row[3],
-                                   dest_node_name:       row[4], dest_url: row[5], dest_group: row[6], resolution_time: row[7], connection_time: row[8],
-                                   time_to_first_byte:   row[9], time_to_first_frame: row[10], total_buffer_time: row[11],
+              VideoTestData.create(test_time: row[0], source_node_name: row[1], source_ip_address: row[2], source_group: row[3],
+                                   dest_node_name: row[4], dest_url: row[5], dest_group: row[6], resolution_time: row[7], connection_time: row[8],
+                                   time_to_first_byte: row[9], time_to_first_frame: row[10], total_buffer_time: row[11],
                                    time_to_first_buffer: row[12], avg_buffer_rate: row[13], buffering_count: row[14], playback_duration: row[15],
-                                   download_time:        row[16], throughput_time: row[17], playback: row[18], resolution_sr: row[19],
-                                   rebuffering_rate:     row[20], connection_sr: row[21], total_sr: row[22], dest_ip_address: row[23],
-                                   dest_nationality:     row[24], dest_province: row[25], dest_locale: row[26], download_size: row[27],
-                                   contents_size:        row[28], return_code: row[29], add_ons: row[30])
+                                   download_time: row[16], throughput_time: row[17], playback: row[18], resolution_sr: row[19],
+                                   rebuffering_rate: row[20], connection_sr: row[21], total_sr: row[22], dest_ip_address: row[23],
+                                   dest_nationality: row[24], dest_province: row[25], dest_locale: row[26], download_size: row[27],
+                                   contents_size: row[28], return_code: row[29], add_ons: row[30])
               i += 1
             end
             puts "video_data_file(#{fname}) have ------>" + i.to_s + ' lines.'
           when /PING/
             i = 1
             CSV.foreach(fname, encoding: 'GB2312:UTF-8', headers: true) do |row|
-              PingTestData.create(test_time:       row[0], source_node_name: row[1], source_ip_address: row[2], source_group: row[3], dest_node_name: row[4],
-                                  dest_url:        row[5], dest_group: row[6], resolution_time: row[7], lost_packets: row[8],
-                                  send_packets:    row[9], lost_packets_no: row[10], delay: row[11], max_delay: row[12], min_delay: row[13],
-                                  std_delay:       row[14], jitter: row[15], max_jitter: row[16], min_jitter: row[17], std_jitter: row[18],
+              PingTestData.create(test_time: row[0], source_node_name: row[1], source_ip_address: row[2], source_group: row[3], dest_node_name: row[4],
+                                  dest_url: row[5], dest_group: row[6], resolution_time: row[7], lost_packets: row[8],
+                                  send_packets: row[9], lost_packets_no: row[10], delay: row[11], max_delay: row[12], min_delay: row[13],
+                                  std_delay: row[14], jitter: row[15], max_jitter: row[16], min_jitter: row[17], std_jitter: row[18],
                                   dest_ip_address: row[19], dest_nationality: row[20], dest_province: row[21], dest_locale: row[22])
               i += 1
             end
@@ -78,20 +78,20 @@ module CsvDb
       lt_web = TestDestNode.where('locale = ?', '联通')
 
       dx_web.each do |dx_line|
-        dx     = 0
-        lt     = 0
-        dx_hr  = 0
-        lt_hr  = 0
-        dx_r   = 0
-        lt_r   = 0
+        dx = 0
+        lt = 0
+        dx_hr = 0
+        lt_hr = 0
+        dx_r = 0
+        lt_r = 0
         #dx_tmp = HttpTestData.where('test_time >= ? and test_time < ? and dest_url = ? ', time_begin, time_end, dx_line.dest_url)
         dx_tmp = HttpTestData.where(:test_time.gte => time_begin, :test_time.lt => time_end, dest_url: dx_line.dest_url)
         dx_tmp.each do |dt|
           if dt.source_node_name[-4..-3] == '电信'
-            dx    += 1
+            dx += 1
             dx_hr += 1 if dt.dest_locale.to_s.strip == '电信'
           elsif dt.source_node_name[-4..-3] =='联通'
-            lt    += 1
+            lt += 1
             lt_hr += 1 if dt.dest_locale.to_s.strip == '联通'
           end
         end
@@ -104,20 +104,20 @@ module CsvDb
       end
 
       lt_web.each do |lt_line|
-        dx     = 0
-        lt     = 0
-        dx_hr  = 0
-        lt_hr  = 0
-        dx_r   = 0
-        lt_r   = 0
+        dx = 0
+        lt = 0
+        dx_hr = 0
+        lt_hr = 0
+        dx_r = 0
+        lt_r = 0
         #lt_tmp = HttpTestData.where('test_time >= ? and test_time < ? and dest_url = ? ', time_begin, time_end, lt_line.dest_url)
         lt_tmp = HttpTestData.where(:test_time.gte => time_begin, :test_time.lt => time_end, dest_url: lt_line.dest_url)
         lt_tmp.each do |ltmp|
           if ltmp.source_node_name[-4..-3] == '电信'
-            dx    += 1
+            dx += 1
             dx_hr += 1 if ltmp.dest_locale.to_s.strip == '电信'
           elsif ltmp.source_node_name[-4..-3] == '联通'
-            lt    += 1
+            lt += 1
             lt_hr += 1 if ltmp.dest_locale.to_s.strip == '联通'
           end
 
@@ -140,9 +140,9 @@ module CsvDb
     def statis_data_to_db(time_begin, time_end)
       #可以优化，直接提取ExportName表中的数据即可。
       export = Set.new
-      match  = Set.new
+      match = Set.new
       #en     = ExportName.all
-      en     = ExportName.where(status: 0)
+      en = ExportName.where(status: 0)
       en.each do |line|
         export << line.alias
       end
@@ -151,8 +151,8 @@ module CsvDb
 
       export.each do |e_name|
         #临时变量数据归零
-        nega_val  = 0
-        nega_num  = 0
+        nega_val = 0
+        nega_num = 0
         total_val = 0
         match.clear
         #export_s  = HttpTestScore.where('source_node_name = ? and test_time >= ? and test_time < ?', e_name, time_begin, time_end)
@@ -164,13 +164,13 @@ module CsvDb
             nega_num += 1
 
             #将负分网站url增加到HttpTestStatisURL表里面去以便于将来统计,type为0表示负分网站
-            htsu_tmp = HttpTestStatisUrl.where(export_name: e_name, day: time_begin.at_beginning_of_day, type: 0)
+            htsu_tmp = HttpTestStatisUrl.where(export_name: e_name, day: time_begin.at_beginning_of_day, type: 0, dest_url: es.dest_url)
             if htsu_tmp.blank?
               HttpTestStatisUrl.create(export_name: e_name, day: time_begin.at_beginning_of_day, type: 0, dest_url: es.dest_url)
             end
           else
             #将网站url增加到HttpTestStatisURL表里面去以便于将来统计,type为1表示非负分网站
-            htsu_tmp = HttpTestStatisUrl.where(export_name: e_name, day: time_begin.at_beginning_of_day, type: 1)
+            htsu_tmp = HttpTestStatisUrl.where(export_name: e_name, day: time_begin.at_beginning_of_day, type: 1, dest_url: es.dest_url)
             if htsu_tmp.blank?
               HttpTestStatisUrl.create(export_name: e_name, day: time_begin.at_beginning_of_day, type: 1, dest_url: es.dest_url)
             end
@@ -180,14 +180,14 @@ module CsvDb
 
         unless match.blank?
           negative_statis = nega_val.to_f / match.size.to_f
-          total_statis    = total_val.to_f / match.size.to_f
-          HttpTestStatis.create(export_name:  e_name, start_time: time_begin, end_time: time_end, negative_statis: negative_statis,
+          total_statis = total_val.to_f / match.size.to_f
+          HttpTestStatis.create(export_name: e_name, start_time: time_begin, end_time: time_end, negative_statis: negative_statis,
                                 total_statis: total_statis, negative_num: nega_num, all_match_num: match.size)
 
           #更新当天的http数据
           up_tmp = HttpTestStatisBtd.where(export_name: e_name, day: time_begin.at_beginning_of_day)
           if up_tmp.blank?
-            HttpTestStatisBtd.create(export_name:  e_name, day: time_begin.at_beginning_of_day, negative_statis: negative_statis,
+            HttpTestStatisBtd.create(export_name: e_name, day: time_begin.at_beginning_of_day, negative_statis: negative_statis,
                                      total_statis: total_statis)
           else
             ns = up_tmp.first.negative_statis + negative_statis
@@ -203,7 +203,7 @@ module CsvDb
           if nega_r >= 0.6
             unless ExportName.where(alias: e_name).first.user.blank?
               email = ExportName.where(alias: e_name).first.user.email
-              en    = ExportName.where(alias: e_name).first.name
+              en = ExportName.where(alias: e_name).first.name
               begin
                 Notifier.notifier_mail(email, nega_num, match.size, time_begin, time_end, en).deliver
               rescue
@@ -216,9 +216,9 @@ module CsvDb
 
         #得负分的浏览网站数量环比上一测试周期增加50%；（相同归属运营商的比较）
         an_hour_ago_begin = time_begin - 1.hour
-        an_hour_age_end   = time_end - 1.hour
+        an_hour_age_end = time_end - 1.hour
         #an_hour_age_hts   = HttpTestStatis.where('export_name = ? and start_time = ? and end_time = ?', e_name, an_hour_ago_begin, an_hour_age_end).first
-        an_hour_age_hts   = HttpTestStatis.where(export_name: e_name, start_time: an_hour_ago_begin, end_time: an_hour_age_end).first
+        an_hour_age_hts = HttpTestStatis.where(export_name: e_name, start_time: an_hour_ago_begin, end_time: an_hour_age_end).first
 
         unless an_hour_age_hts.blank?
           unless an_hour_age_hts.negative_num.blank?
@@ -226,7 +226,7 @@ module CsvDb
             if nega_num.to_f > 1.5 * an_hour_age_hts.negative_num.to_f
               unless ExportName.where(alias: e_name).first.user.blank?
                 email = ExportName.where(alias: e_name).first.user.email
-                en    = ExportName.where(alias: e_name).first.name
+                en = ExportName.where(alias: e_name).first.name
                 begin
                   Notifier.notifier_degradation_mail(email, nega_num, an_hour_age_hts.negative_num, time_begin, time_end, en).deliver
                 rescue
@@ -246,7 +246,7 @@ module CsvDb
       t_e = time_end
 
       blackbone_data = blackbone_data_valid(t_b, t_e, ds)
-      other_data     = other_data_valid(t_b, t_e, ds)
+      other_data = other_data_valid(t_b, t_e, ds)
       #puts '*'*50
       #puts other_data.inspect
 
@@ -261,31 +261,31 @@ module CsvDb
         cons_data = flag_data.first
 
         unless cons_data.blank?
-          hts                         = {}
-          hts[:test_time]             = odata.test_time
-          hts[:source_node_name]      = odata.source_node_name
-          hts[:source_ip_address]     = odata.source_ip_address
-          hts[:source_group]          = odata.source_group
-          hts[:dest_node_name]        = odata.dest_node_name
-          hts[:dest_url]              = odata.dest_url
-          hts[:dest_group]            = odata.dest_group
-          hts[:return_code]           = odata.return_code
-          hts[:dest_ip_address]       = odata.dest_ip_address
-          hts[:dest_nationality]      = odata.dest_nationality
-          hts[:dest_province]         = odata.dest_province
-          hts[:dest_locale]           = odata.dest_locale
+          hts = {}
+          hts[:test_time] = odata.test_time
+          hts[:source_node_name] = odata.source_node_name
+          hts[:source_ip_address] = odata.source_ip_address
+          hts[:source_group] = odata.source_group
+          hts[:dest_node_name] = odata.dest_node_name
+          hts[:dest_url] = odata.dest_url
+          hts[:dest_group] = odata.dest_group
+          hts[:return_code] = odata.return_code
+          hts[:dest_ip_address] = odata.dest_ip_address
+          hts[:dest_nationality] = odata.dest_nationality
+          hts[:dest_province] = odata.dest_province
+          hts[:dest_locale] = odata.dest_locale
 
           #正分、负分、零分有多少项及各项的分值
-          hts[:positive_items]        = 0
-          hts[:negative_items]        = 0
-          hts[:equal_items]           = 0
+          hts[:positive_items] = 0
+          hts[:negative_items] = 0
+          hts[:equal_items] = 0
           hts[:positive_items_scores] = 0
           hts[:negative_items_scores] = 0
-          hts[:equal_items_scores]    = 0
-          scores                      = []
+          hts[:equal_items_scores] = 0
+          scores = []
 
           #psc = ParamScoreConfig.where('param_type = ? and weight > ?', 'htd', 0)
-          psc                         = ParamScoreConfig.where(param_type: 'htd', :weight.gt => 0)
+          psc = ParamScoreConfig.where(param_type: 'htd', :weight.gt => 0)
           psc.each do |pc|
             case pc.param_name
               when 'resolution_time'
@@ -350,7 +350,7 @@ module CsvDb
           hts[:positive_items], hts[:positive_items_scores], hts[:negative_items], hts[:negative_items_scores], hts[:equal_items], hts[:equal_items_scores] = statis_score scores
 
           hts[:total_scores] = hts[:positive_items_scores] + hts[:negative_items_scores]
-          hts_record         = HttpTestScore.new(hts)
+          hts_record = HttpTestScore.new(hts)
           hts_record.save
         end
       end
