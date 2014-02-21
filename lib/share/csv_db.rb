@@ -164,16 +164,10 @@ module CsvDb
             nega_num += 1
 
             #将负分网站url增加到HttpTestStatisURL表里面去以便于将来统计,type为0表示负分网站
-            htsu_tmp = HttpTestStatisUrl.where(export_name: e_name, day: time_begin.at_beginning_of_day, type: 0, dest_url: es.dest_url)
-            if htsu_tmp.blank?
-              HttpTestStatisUrl.create(export_name: e_name, day: time_begin.at_beginning_of_day, type: 0, dest_url: es.dest_url)
-            end
+            HttpTestStatisUrl.create(export_name: e_name, day: time_begin.at_beginning_of_day, type: 0, dest_url: es.dest_url)
           else
             #将网站url增加到HttpTestStatisURL表里面去以便于将来统计,type为1表示非负分网站
-            htsu_tmp = HttpTestStatisUrl.where(export_name: e_name, day: time_begin.at_beginning_of_day, type: 1, dest_url: es.dest_url)
-            if htsu_tmp.blank?
-              HttpTestStatisUrl.create(export_name: e_name, day: time_begin.at_beginning_of_day, type: 1, dest_url: es.dest_url)
-            end
+            HttpTestStatisUrl.create(export_name: e_name, day: time_begin.at_beginning_of_day, type: 1, dest_url: es.dest_url)
           end
           match << es.dest_url
         end
