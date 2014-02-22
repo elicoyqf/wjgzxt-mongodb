@@ -272,10 +272,10 @@ negative_items_scores equal_items_scores total_scores)
     end
     #将对比标杆出口去掉
     etn.delete(BACKBONE)
-    hts = HttpTestStatis.where(:start_time.gte => time_begin, :start_time.lt => time_end)
+    #hts = HttpTestStatis.where(:start_time.gte => time_begin, :start_time.lt => time_end)
 
     #todo:等数据更新后将可以启用新的算法
-    #hts = HttpTestStatisBtd.where(:start_time.gte => time_begin.at_beginning_of_day, :start_time.lt => time_end)
+    hts = HttpTestStatisBtd.where(:start_time.gte => time_begin.at_beginning_of_day, :start_time.lt => time_end)
     #等数据更新后将可以启用新的算法
 
     dx  = 0
@@ -296,6 +296,7 @@ negative_items_scores equal_items_scores total_scores)
     total_eql = 0
     match_web = Set.new
     negat_web = Set.new
+    posit_web = Set.new
     dx_array  = []
     lt_array  = []
     etn.each do |ename|
@@ -310,17 +311,27 @@ negative_items_scores equal_items_scores total_scores)
         t_array << en_tmp.name
         match_web.clear
         negat_web.clear
-        tmp = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_end, :source_node_name => ename)
-        tmp.each do |t|
-          match_web << t.dest_url
-          if t.total_scores < 0
-            negat_web << t.dest_url
-          end
-        end
+        posit_web.clear
+        #tmp = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_end, :source_node_name => ename)
+        #tmp.each do |t|
+        #  match_web << t.dest_url
+        #  if t.total_scores < 0
+        #    negat_web << t.dest_url
+        #  end
+        #end
 
         #todo:等数据更新后将可以启用新的算法
-        #negative_web = HttpTestStatisUrl.where(:test_time.gte => time_begin.at_beginning_of_day, :test_time.lt => time_end, :source_node_name => ename, :type => 0).count
-        #match_web    = HttpTestStatisUrl.where(:test_time.gte => time_begin.at_beginning_of_day, :test_time.lt => time_end, :source_node_name => ename).count
+        negative_web = HttpTestStatisUrl.where(:test_time.gte => time_begin.at_beginning_of_day, :test_time.lt => time_end, :source_node_name => ename, :type => 0)
+        positive_web = HttpTestStatisUrl.where(:test_time.gte => time_begin.at_beginning_of_day, :test_time.lt => time_end, :source_node_name => ename,:type => 1)
+        negative_web.each do |nw|
+          negat_web << nw.dest_url
+        end
+
+        positive_web.each do |pw|
+          positive_web << pw.dest_url
+        end
+
+        match_web = negative_web + positive_web
         #等数据更新后将可以启用新的算法
 
 
