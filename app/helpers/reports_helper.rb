@@ -276,6 +276,7 @@ negative_items_scores equal_items_scores total_scores)
 
     #todo:等数据更新后将可以启用新的算法
     #hts = HttpTestStatisBtd.where(:day.gte => time_begin.at_beginning_of_day, :day.lt => time_end)
+    #htsu = HttpTestStatisUrl.batch_size(1000).no_timeout.where(:day.gte => time_begin.at_beginning_of_day, :day.lt => time_end)
     #等数据更新后将可以启用新的算法
 
     dx  = 0
@@ -312,6 +313,7 @@ negative_items_scores equal_items_scores total_scores)
         match_web.clear
         negat_web.clear
         posit_web.clear
+
         tmp = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_end, :source_node_name => ename)
         tmp.each do |t|
           match_web << t.dest_url
@@ -321,8 +323,8 @@ negative_items_scores equal_items_scores total_scores)
         end
 
         #todo:等数据更新后将可以启用新的算法
-        #negative_web = HttpTestStatisUrl.where(:day.gte => time_begin.at_beginning_of_day, :day.lt => time_end, :export_name => ename, :type => 0)
-        #positive_web = HttpTestStatisUrl.where(:day.gte => time_begin.at_beginning_of_day, :day.lt => time_end, :export_name => ename, :type => 1)
+        #negative_web = htsu.where(:export_name => ename, :type => 0).batch_size(1000)
+        #positive_web = htsu.where(:export_name => ename, :type => 1).batch_size(1000)
         #negative_web.each do |nw|
         #  negat_web << nw.dest_url
         #end
