@@ -312,26 +312,26 @@ negative_items_scores equal_items_scores total_scores)
         match_web.clear
         negat_web.clear
         posit_web.clear
-        #tmp = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_end, :source_node_name => ename)
-        #tmp.each do |t|
-        #  match_web << t.dest_url
-        #  if t.total_scores < 0
-        #    negat_web << t.dest_url
-        #  end
-        #end
+        tmp = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_end, :source_node_name => ename)
+        tmp.each do |t|
+          match_web << t.dest_url
+          if t.total_scores < 0
+            negat_web << t.dest_url
+          end
+        end
 
         #todo:等数据更新后将可以启用新的算法
-        negative_web = HttpTestStatisUrl.where(:day.gte => time_begin.at_beginning_of_day, :day.lt => time_end, :export_name => ename, :type => 0)
-        positive_web = HttpTestStatisUrl.where(:day.gte => time_begin.at_beginning_of_day, :day.lt => time_end, :export_name => ename, :type => 1)
-        negative_web.each do |nw|
-          negat_web << nw.dest_url
-        end
-
-        positive_web.each do |pw|
-          positive_web << pw.dest_url
-        end
-
-        match_web = negative_web + positive_web
+        #negative_web = HttpTestStatisUrl.where(:day.gte => time_begin.at_beginning_of_day, :day.lt => time_end, :export_name => ename, :type => 0)
+        #positive_web = HttpTestStatisUrl.where(:day.gte => time_begin.at_beginning_of_day, :day.lt => time_end, :export_name => ename, :type => 1)
+        #negative_web.each do |nw|
+        #  negat_web << nw.dest_url
+        #end
+        #
+        #positive_web.each do |pw|
+        #  positive_web << pw.dest_url
+        #end
+        #
+        #match_web = negative_web + positive_web
         #等数据更新后将可以启用新的算法
 
 
