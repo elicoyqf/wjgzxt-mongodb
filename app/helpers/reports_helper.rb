@@ -272,10 +272,10 @@ negative_items_scores equal_items_scores total_scores)
     end
     #将对比标杆出口去掉
     etn.delete(BACKBONE)
-    hts = HttpTestStatis.where(:start_time.gte => time_begin, :start_time.lt => time_end)
+    #hts = HttpTestStatis.where(:start_time.gte => time_begin, :start_time.lt => time_end)
 
     #todo:等数据更新后将可以启用新的算法
-    #hts = HttpTestStatisBtd.where(:day.gte => time_begin.at_beginning_of_day, :day.lt => time_end)
+    hts = HttpTestStatisBtd.where(:day.gte => time_begin.at_beginning_of_day, :day.lt => time_end)
     #等数据更新后将可以启用新的算法
 
     dx  = 0
