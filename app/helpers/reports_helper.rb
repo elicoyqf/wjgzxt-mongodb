@@ -314,7 +314,12 @@ negative_items_scores equal_items_scores total_scores)
         negat_web.clear
         posit_web.clear
 
-        tmp = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_end, :source_node_name => ename)
+        time_diff = (time_end - time_begin) / (3600 * 24)
+        if time_diff > 3
+          tmp = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_begin + 3.day, :source_node_name => ename)
+        else
+          tmp = HttpTestScore.where(:test_time.gte => time_begin, :test_time.lt => time_end, :source_node_name => ename)
+        end
         tmp.each do |t|
           match_web << t.dest_url
           if t.total_scores < 0
