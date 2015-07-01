@@ -9,7 +9,7 @@ class ParamSettingController < ApplicationController
 
   def u_user
     uid   = params[:id]
-    @user = User.find(uid.to_s.to_i)
+    @user = User.find(uid.to_s)
   end
 
   def p_u_user
@@ -30,14 +30,14 @@ class ParamSettingController < ApplicationController
       redirect_to action: 'adduser'
     else
       if passwd.to_s.size == 32
-        User.find(uid.to_s.to_i).update_attributes(uname: loginname, status: 0, level: level, alias: realname, email: email, contact: contact, password: passwd)
+        User.find(uid.to_s).update_attributes(uname: loginname, status: 0, level: level, alias: realname, email: email, contact: contact, password: passwd)
         flash[:success] = '更新用户成功，如下示。'
         redirect_to action: 'mng_user'
       elsif passwd.to_s.size < 6 || passwd.to_s.size > 18 && passwd.to_s.size < 32
         flash[:error] = '密码长度必须要在6-18，请检查。'
         redirect_to action: 'adduser'
       else
-        User.find(uid.to_s.to_i).update_attributes(uname: loginname, status: 0, level: level, alias: realname, email: email, contact: contact, password: Digest::MD5.hexdigest(passwd))
+        User.find(uid.to_s).update_attributes(uname: loginname, status: 0, level: level, alias: realname, email: email, contact: contact, password: Digest::MD5.hexdigest(passwd))
         redirect_to action: 'mng_user'
       end
 
@@ -46,7 +46,7 @@ class ParamSettingController < ApplicationController
 
   def s_user
     uid  = params[:id]
-    user = User.find(uid.to_s.to_i)
+    user = User.find(uid.to_s)
 
     if user.status == 1
       user.update_attribute(:status, 0)
