@@ -8,9 +8,11 @@ namespace :database do
     tb                   = Time.now
     time                 = Time.now.at_beginning_of_hour - 2.hour
     postfix              = time.strftime('%Y%m%d%H%M') + '.csv'
+
+    #测试时文件存放位置
     #http_filename        = 'E:/HTTP_201308202000.csv'
-    telcom_http_filename        = '/home/wgdata/telcom_HTTP_' + postfix
-    unicom_http_filename        = '/home/wgdata/unicom_HTTP_' + postfix
+    # telcom_http_filename        = 'E:\testfiles\telcom_HTTP_201508081300.csv'
+    # unicom_http_filename        = 'E:\testfiles\unicom_HTTP_201508081300.csv'
     #trace_route_filename = '/home/wgdata/TEST'
     #video_filename       = '/home/wgdata/TEST'
     #ping_filename        = '/home/wgdata/TEST'
@@ -18,12 +20,17 @@ namespace :database do
     #trace_route_filename = '/home/wgdata/TRACE ROUTE_' + postfix
     #video_filename       = '/home/wgdata/Video_' + postfix
     #ping_filename        = '/home/wgdata/PING_' + postfix
-    filename             = []
     #filename << file
-    filename << unicom_http_filename
-    filename << telcom_http_filename
     #filename << video_filename
     #filename << ping_filename
+
+    #正常代码部分。
+    telcom_http_filename        = '/home/wgdata/telcom_HTTP_' + postfix
+    unicom_http_filename        = '/home/wgdata/unicom_HTTP_' + postfix
+
+    filename             = []
+    filename << unicom_http_filename
+    filename << telcom_http_filename
 
     update_db = CsvDb::CsvProcedure.new
     update_db.csv_to_db filename
@@ -54,8 +61,8 @@ namespace :database do
     a_data.statis_data_to_db(time_begin, time_end)
     #a_data.statis_web_hit_rate(time_begin,time_end)
     te = Time.now
-    #puts 'time_begin is :' + time_begin.to_s
-    #puts 'time_end   is :' + time_end.to_s
+    puts 'time_begin is :' + time_begin.to_s
+    puts 'time_end   is :' + time_end.to_s
     puts 'analyse_data total time is ====> ' + (te-tb).to_s + ' second.'
   end
 
